@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-d$ul3c0s)o&53(8%@knw-)g8z1%l4@h6t-h7arht644)a9y3cc
 DEBUG = False
 
 ALLOWED_HOSTS = ['cknewsportal.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://cknewsportal.onrender.com/']
+CSRF_TRUSTED_ORIGINS = ['https://cknewsportal.onrender.com']
 
 
 # Application definition
@@ -127,7 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
