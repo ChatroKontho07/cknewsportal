@@ -150,3 +150,15 @@ AWS_QUERYSTRING_AUTH = True
 
 MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.backblazeb2.com/'
 #MEDIA_ROOT = BASE_DIR / 'media'
+
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'AntiCorruption Admin',
+    'site_header': 'AntiCorruption Admin',
+    "site_brand": "AntiCorruption", 
+    'site_logo': 'img/logo.png',
+    'welcome_sign': 'Deny the Corruption',
+    #"custom_css": "admin/admin.css",  
+    #"custom_js": "admin/admin.js", 
+    "show_sidebar": True,
+}
