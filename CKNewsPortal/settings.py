@@ -154,12 +154,12 @@ MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.backblaz
 
 
 JAZZMIN_SETTINGS = {
-    'site_title': 'AntiCorruption Admin',
-    'site_header': 'AntiCorruption Admin',
-    "site_brand": "AntiCorruption", 
+    'site_title': 'ChatroKontho Admin',
+    'site_header': 'ChatroKontho Admin',
+    "site_brand": "ChatroKontho", 
     'site_logo': 'img/logo.png',
-    'welcome_sign': 'Deny the Corruption',
-    #"custom_css": "admin/admin.css",  
-    #"custom_js": "admin/admin.js", 
+    'welcome_sign': 'Welcome to ChatroKontho Admin',
+    "custom_css": "admin/admin.css",  
+    "custom_js": "admin/admin.js", 
     "show_sidebar": True,
 }
