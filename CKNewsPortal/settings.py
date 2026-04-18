@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-d$ul3c0s)o&53(8%@knw-)g8z1%l4@h6t-h7arht644)a9y3cc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['cknewsportal.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://cknewsportal.onrender.com']
+ALLOWED_HOSTS = ['cknewsportal.onrender.com','https://www.chatrokontho.pro.bd']
+CSRF_TRUSTED_ORIGINS = ['https://cknewsportal.onrender.com','https://www.chatrokontho.pro.bd/']
 
 
 # Application definition
