@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from .models import ExamRecord, Protinidi
 
-def is_passed(total_marks_str):
-    return int(total_marks_str or 0) >= 80 
-
-
+def is_passed(record):
+    try:
+        test = int(record.test_mark or 0)
+        viva = int(record.viva_mark or 0)
+        behaviour = int(record.behaviour_mark or 0)
+        total = test + viva + behaviour
+        return total >= 80
+    except (ValueError, TypeError):
+        return False  # "NOT EXAM" or "-" will safely return False
 def home(request):
     context = {}
 
@@ -15,10 +20,8 @@ def home(request):
         try:
             student  = Protinidi.objects.get(exam_id__iexact=exam_id)
             record   = ExamRecord.objects.get(student=student)
-            
-            marks_gained = record.test_mark + record.viva_mark + record.behaviour_mark
             context['record']    = record
-            context['is_passed'] = is_passed(marks_gained)
+            context['is_passed'] = is_passed(record)
         except Protinidi.DoesNotExist:
             context['error'] = 'সঠিক এক্সাম আইডি লিখুন।'
         except ExamRecord.DoesNotExist:
