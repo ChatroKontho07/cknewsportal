@@ -15,8 +15,10 @@ def home(request):
         try:
             student  = Protinidi.objects.get(exam_id__iexact=exam_id)
             record   = ExamRecord.objects.get(student=student)
+            
+            marks_gained = record.test_mark + record.viva_mark + record.behaviour_mark
             context['record']    = record
-            context['is_passed'] = is_passed(record.total_marks)
+            context['is_passed'] = is_passed(marks_gained)
         except Protinidi.DoesNotExist:
             context['error'] = 'সঠিক এক্সাম আইডি লিখুন।'
         except ExamRecord.DoesNotExist:
