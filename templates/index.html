@@ -1,0 +1,370 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>রেজাল্ট পোর্টাল</title>
+  <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'SolaimanLipi', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.22), transparent 35%),
+        linear-gradient(135deg, #eef2ff, #f8fafc 55%, #e0f2fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #0f172a;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 540px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 28px;
+      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .header {
+      position: relative;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb, #06b6d4);
+      color: #ffffff;
+      text-align: center;
+      padding: 34px 22px 40px;
+      overflow: hidden;
+    }
+
+    .header::before,
+    .header::after {
+      content: '';
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .header::before { top: -70px; left: -55px; }
+    .header::after  { right: -65px; bottom: -85px; }
+
+    .badge {
+      position: relative;
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .header h1 {
+      position: relative;
+      font-size: 26px;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+      line-height: 1.35;
+    }
+
+    .header p {
+      position: relative;
+      font-size: 15px;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    .card { padding: 30px; }
+
+    label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 9px;
+      font-size: 15px;
+      color: #1e293b;
+    }
+
+    .input-wrap { position: relative; }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 15px 15px 15px 44px;
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      outline: none;
+      font-size: 16px;
+      background: #f8fafc;
+      transition: 0.25s;
+      font-family: 'SolaimanLipi', sans-serif;
+    }
+
+    input[type="text"]:focus {
+      background: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.12);
+    }
+
+    /* ---- Alert boxes ---- */
+    .alert-box {
+      margin-top: 14px;
+      padding: 13px 15px;
+      border-radius: 16px;
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .congrats-box {
+      margin-top: 14px;
+      padding: 13px 15px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+      color: #047857;
+      border: 1px solid #86efac;
+      font-weight: 800;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    /* ---- Button ---- */
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #2563eb, #0891b2);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
+      font-family: 'SolaimanLipi', sans-serif;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(37, 99, 235, 0.3);
+    }
+
+    /* ---- Result box ---- */
+    .result-box {
+      margin-top: 25px;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #ffffff;
+      animation: fadeIn 0.35s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-title {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 16px;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 15px 17px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 15px;
+    }
+
+    .result-row:last-child { border-bottom: none; }
+
+    .result-row span:first-child {
+      font-weight: 800;
+      color: #475569;
+    }
+
+    .status-pass {
+      color: #047857;
+      font-weight: 900;
+      background: #dcfce7;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .status-fail {
+      color: #dc2626;
+      font-weight: 900;
+      background: #fee2e2;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      padding: 0 20px 24px;
+    }
+
+    /* ---- CSRF note ---- */
+    .csrf-hidden { display: none; }
+
+    @media (max-width: 560px) {
+      body { padding: 12px; align-items: flex-start; }
+      .container { border-radius: 22px; }
+      .header { padding: 28px 18px 32px; }
+      .header h1 { font-size: 20px; }
+      .card { padding: 22px; }
+      .result-row { flex-direction: column; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+
+    <!-- ===== HEADER ===== -->
+    <section class="header">
+      <div class="badge">শিশু সাংবাদিকতা বিভাগ</div>
+      <h1>ছাত্র কন্ঠ পত্রিকা স্কুল প্রতিনিধি যাচাই চূড়ান্ত পরীক্ষা-২০২৬</h1>
+      <p>আপনার এক্সাম আইডি লিখে ফলাফল দেখুন।</p>
+    </section>
+
+    <!-- ===== FORM ===== -->
+    <section class="card">
+      <form method="POST" action="">
+        {% csrf_token %}
+
+        <label for="exam_id">আপনার এক্সাম আইডি</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔎</span>
+          <input
+            type="text"
+            id="exam_id"
+            name="exam_id"
+            placeholder="EX: CK-0001"
+            autocomplete="off"
+            value="{{ submitted_id|default:'' }}"
+          >
+        </div>
+
+        {# ---- Error message (ID not found) ---- #}
+        {% if error %}
+          <div class="alert-box alert-error">{{ error }}</div>
+        {% endif %}
+
+        <button type="submit">রেজাল্ট দেখুন</button>
+      </form>
+
+      {# ====== RESULT SECTION — shown only when a record is found ====== #}
+      {% if record %}
+
+        {# Determine pass/fail once so we can reuse #}
+        {% with result_lower=record.total_marks|lower %}
+
+          {# Congratulations banner for pass #}
+          {% if record.student.name %}
+            {% comment %}
+              We check pass status in the template tag below.
+              Django templates can't call .lower() and compare easily,
+              so we expose an `is_passed` boolean from the view.
+            {% endcomment %}
+          {% endif %}
+
+          {% if is_passed %}
+            <div class="congrats-box">
+              🎉 অভিনন্দন {{ record.student.name }}! আপনি সফলভাবে স্কুল প্রতিনিধি যাচাই পরীক্ষায় উত্তীর্ণ হয়েছেন।
+            </div>
+          {% endif %}
+
+        {% endwith %}
+
+        <div class="result-box">
+          <div class="result-title">আবেদকৃত প্রার্থীর রেজাল্ট</div>
+
+          <div class="result-row">
+            <span>এক্সাম আইডি</span>
+            <span>{{ record.student.exam_id }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>নাম</span>
+            <span>{{ record.student.name }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>মোবাইল</span>
+            <span>{{ record.student.mobile }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>শ্রেণি / শিক্ষা</span>
+            <span>{{ record.student.education|default:"-" }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>লিখিত নম্বর</span>
+            <span>{{ record.test_mark|default:"-" }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>ভাইভা নম্বর</span>
+            <span>{{ record.viva_mark|default:"-" }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>আচরণ নম্বর</span>
+            <span>{{ record.behaviour_mark|default:"-" }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>মোট নম্বর</span>
+            <span>{{ record.total_marks|default:"-" }}</span>
+          </div>
+
+          <div class="result-row">
+            <span>ফলাফল</span>
+            <span class="{% if is_passed %}status-pass{% else %}status-fail{% endif %}">
+              {% if is_passed %}উত্তীর্ণ ✅{% else %}অনুত্তীর্ণ ❌{% endif %}
+            </span>
+          </div>
+
+        </div><!-- /result-box -->
+
+      {% endif %}
+    </section>
+
+    <p class="footer">© ছাত্র কন্ঠ পত্রিকা, বাংলাদেশ</p>
+
+  </main>
+</body>
+</html>
